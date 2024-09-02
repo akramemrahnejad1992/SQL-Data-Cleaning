@@ -3,7 +3,6 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-*.ipynb
 # C extensions
 *.so
 
@@ -38,6 +37,7 @@ coverage.xml
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints
+*.ipynb
 
 # Pytest
 .cache/

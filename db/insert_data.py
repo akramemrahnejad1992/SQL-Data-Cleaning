@@ -6,71 +6,32 @@ from psycopg2 import sql
 def insert_covid_data(conn, data):
     cursor = conn.cursor()
     insert_query = sql.SQL('''
-        INSERT INTO covid_data (
-            iso_code,
-            continent,
-            location,
-            date,
-            total_cases,
-            new_cases,
-            new_cases_smoothed,
-            total_deaths,
-            new_deaths,
-            new_deaths_smoothed,
-            total_cases_per_million,
-            new_cases_per_million,
-            new_cases_smoothed_per_million,
-            total_deaths_per_million,
-            new_deaths_per_million,
-            new_deaths_smoothed_per_million,
-            reproduction_rate,
-            icu_patients,
-            icu_patients_per_million,
-            hosp_patients,
-            hosp_patients_per_million,
-            weekly_icu_admissions,
-            weekly_icu_admissions_per_million,
-            weekly_hosp_admissions,
-            weekly_hosp_admissions_per_million,
-            new_tests,
-            total_tests,
-            total_tests_per_thousand,
-            new_tests_per_thousand,
-            new_tests_smoothed,
-            new_tests_smoothed_per_thousand,
-            positive_rate,
-            tests_per_case,
-            tests_units,
-            total_vaccinations,
-            people_vaccinated,
-            people_fully_vaccinated,
-            new_vaccinations,
-            new_vaccinations_smoothed,
-            total_vaccinations_per_hundred,
-            people_vaccinated_per_hundred,
-            people_fully_vaccinated_per_hundred,
-            new_vaccinations_smoothed_per_million,
-            stringency_index,
-            population,
-            population_density,
-            median_age,
-            aged_65_older,
-            aged_70_older,
-            gdp_per_capita,
-            extreme_poverty,
-            cardiovasc_death_rate,
-            diabetes_prevalence,
-            female_smokers,
-            male_smokers,
-            handwashing_facilities,
-            hospital_beds_per_thousand,
-            life_expectancy,
-            human_development_index
-        ) VALUES %s
-    ''')
-    
+    INSERT INTO PropertySales (
+        UniqueID,
+        ParcelID,
+        LandUse,
+        PropertyAddress,
+        SaleDate,
+        SalePrice,
+        LegalReference,
+        SoldAsVacant,
+        OwnerName,
+        OwnerAddress,
+        Acreage,
+        TaxDistrict,
+        LandValue,
+        BuildingValue,
+        TotalValue,
+        YearBuilt,
+        Bedrooms,
+        FullBath,
+        HalfBath
+    ) VALUES %s
+      ON CONFLICT (UniqueID) DO NOTHING
+''')
     data_to_insert = []
     for index, row in data.iterrows():
+        iso_code = row['iso_code']
         try:
             # Replace NaN with None for insertion
             row_data = (
@@ -139,7 +100,7 @@ def insert_covid_data(conn, data):
             data_to_insert.append(row_data)
             
         except Exception as e:
-            print(f'Error processing row {index}: {e}')
+            print(f'Error processing row {index}: {e}', iso_code)
 
     # Insert the data into the database
     execute_values(cursor, insert_query, data_to_insert)
