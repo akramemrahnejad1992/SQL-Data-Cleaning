@@ -64,12 +64,3 @@ your-repo-name/
 ├── requirements.txt               # Python dependencies
 └── README.md                      # Project documentation
 ```
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-- Mention any resources or individuals that helped you during the project.
-```
-
-Feel free to make any further adjustments or let me know if you need additional changes!
